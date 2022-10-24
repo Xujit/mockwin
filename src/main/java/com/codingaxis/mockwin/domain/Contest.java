@@ -120,15 +120,15 @@ public class Contest extends PanacheEntityBase implements Serializable {
   @JoinColumn(unique = true)
   public Country country;
 
-  @OneToMany(mappedBy = "contest")
+  @OneToMany
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
   public Set<Curriculum> curricula = new HashSet<>();
 
-  @OneToMany(mappedBy = "contest")
+  @OneToMany
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
   public Set<SubContest> subContests = new HashSet<>();
 
-  @OneToOne(mappedBy = "contest")
+  @OneToOne
   @JsonIgnore
   public ContestResponse contestResponse;
 

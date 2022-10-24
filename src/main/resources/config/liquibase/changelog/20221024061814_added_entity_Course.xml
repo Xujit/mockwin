@@ -6,7 +6,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    
+
     <!--
         Added the entity Course.
     -->
@@ -42,9 +42,7 @@
             <column name="exam_type_id" type="bigint">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_course_exam_type_id" />
             </column>
-            <column name="compet_exam_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
+
             <column name="compet_exam_response_id" type="bigint">
                 <constraints nullable="true" />
             </column>

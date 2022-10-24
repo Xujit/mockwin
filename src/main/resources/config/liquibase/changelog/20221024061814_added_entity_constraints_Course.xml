@@ -7,18 +7,8 @@
         Added the constraints for entity Course.
     -->
     <changeSet id="20221024061814-2" author="jhipster">
-        
-        <addForeignKeyConstraint baseColumnNames="exam_type_id"
-                                 baseTableName="course"
-                                 constraintName="fk_course_exam_type_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="exam_type"/>
 
-        <addForeignKeyConstraint baseColumnNames="compet_exam_id"
-                                 baseTableName="course"
-                                 constraintName="fk_course_compet_exam_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="compet_exam"/>
+
 
         <addForeignKeyConstraint baseColumnNames="compet_exam_response_id"
                                  baseTableName="course"

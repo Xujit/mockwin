@@ -2,20 +2,14 @@ package com.codingaxis.mockwin.domain;
 
 import java.io.Serializable;
 
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.runtime.annotations.RegisterForReflection;
@@ -38,15 +32,6 @@ public class ExamType extends PanacheEntityBase implements Serializable {
 
   @Column(name = "exam_type")
   public String examType;
-
-  @OneToOne(mappedBy = "examType")
-  @JsonIgnore
-  public Course course;
-
-  @ManyToOne
-  @JoinColumn(name = "user_preference_id")
-  @JsonbTransient
-  public UserPreference userPreference;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
@@ -92,8 +77,6 @@ public class ExamType extends PanacheEntityBase implements Serializable {
     var entity = ExamType.<ExamType> findById(examType.id);
     if (entity != null) {
       entity.examType = examType.examType;
-      entity.course = examType.course;
-      entity.userPreference = examType.userPreference;
     }
     return entity;
   }

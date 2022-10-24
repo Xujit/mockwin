@@ -6,7 +6,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    
+
     <!--
         Added the entity File.
     -->
@@ -21,10 +21,7 @@
             <column name="filename" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="assign_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="assign_id" type="bigint">
+              <column name="assign_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="banner_contest_id" type="bigint">

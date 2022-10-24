@@ -18,7 +18,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -65,26 +64,16 @@ public class Mcq extends PanacheEntityBase implements Serializable {
   public Subject subject;
 
   @OneToOne
-  @JoinColumn(unique = true)
   public Category category;
 
-  @OneToMany(mappedBy = "mcq")
+  @OneToMany
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
   public Set<Options> options = new HashSet<>();
-
-  @OneToOne(mappedBy = "mcq")
-  @JsonIgnore
-  public ContestSme contestSme;
 
   @ManyToOne
   @JoinColumn(name = "contest_response_id")
   @JsonbTransient
   public ContestResponse contestResponse;
-
-  @ManyToOne
-  @JoinColumn(name = "mcqcontest_map_id")
-  @JsonbTransient
-  public MCQContestMap mCQContestMap;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
@@ -140,9 +129,7 @@ public class Mcq extends PanacheEntityBase implements Serializable {
       entity.subject = mcq.subject;
       entity.category = mcq.category;
       entity.options = mcq.options;
-      entity.contestSme = mcq.contestSme;
       entity.contestResponse = mcq.contestResponse;
-      entity.mCQContestMap = mcq.mCQContestMap;
     }
     return entity;
   }

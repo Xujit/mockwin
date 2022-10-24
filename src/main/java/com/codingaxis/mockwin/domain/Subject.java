@@ -8,11 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.runtime.annotations.RegisterForReflection;
@@ -38,10 +35,6 @@ public class Subject extends PanacheEntityBase implements Serializable {
 
   @Column(name = "subject_name")
   public String subjectName;
-
-  @OneToOne(mappedBy = "subject")
-  @JsonIgnore
-  public Mcq mcq;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
@@ -89,7 +82,6 @@ public class Subject extends PanacheEntityBase implements Serializable {
     if (entity != null) {
       entity.modificationCounter = subject.modificationCounter;
       entity.subjectName = subject.subjectName;
-      entity.mcq = subject.mcq;
     }
     return entity;
   }

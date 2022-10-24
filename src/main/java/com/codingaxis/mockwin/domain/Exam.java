@@ -8,12 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.runtime.annotations.RegisterForReflection;
@@ -43,22 +40,6 @@ public class Exam extends PanacheEntityBase implements Serializable {
 
   @Column(name = "description")
   public String description;
-
-  @OneToOne(mappedBy = "exam")
-  @JsonIgnore
-  public Contest contest;
-
-  @OneToOne(mappedBy = "exam")
-  @JsonIgnore
-  public ContestSme contestSme;
-
-  @OneToOne(mappedBy = "exam")
-  @JsonIgnore
-  public Mcq mcq;
-
-  @OneToOne(mappedBy = "exam")
-  @JsonIgnore
-  public MCQContest mCQContest;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
@@ -107,10 +88,6 @@ public class Exam extends PanacheEntityBase implements Serializable {
       entity.modificationCounter = exam.modificationCounter;
       entity.examName = exam.examName;
       entity.description = exam.description;
-      entity.contest = exam.contest;
-      entity.contestSme = exam.contestSme;
-      entity.mcq = exam.mcq;
-      entity.mCQContest = exam.mCQContest;
     }
     return entity;
   }

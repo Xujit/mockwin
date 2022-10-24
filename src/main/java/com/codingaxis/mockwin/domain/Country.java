@@ -2,21 +2,15 @@ package com.codingaxis.mockwin.domain;
 
 import java.io.Serializable;
 
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.runtime.annotations.RegisterForReflection;
@@ -46,15 +40,6 @@ public class Country extends PanacheEntityBase implements Serializable {
 
   @Column(name = "description")
   public String description;
-
-  @OneToOne(mappedBy = "country")
-  @JsonIgnore
-  public Contest contest;
-
-  @ManyToOne
-  @JoinColumn(name = "user_preference_id")
-  @JsonbTransient
-  public UserPreference userPreference;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
@@ -103,8 +88,7 @@ public class Country extends PanacheEntityBase implements Serializable {
       entity.modificationCounter = country.modificationCounter;
       entity.countryName = country.countryName;
       entity.description = country.description;
-      entity.contest = country.contest;
-      entity.userPreference = country.userPreference;
+
     }
     return entity;
   }
