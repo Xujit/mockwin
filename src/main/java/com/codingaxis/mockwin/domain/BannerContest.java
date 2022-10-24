@@ -1,7 +1,10 @@
 package com.codingaxis.mockwin.domain;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Cacheable;
@@ -72,6 +75,11 @@ public class BannerContest extends PanacheEntityBase implements Serializable {
   @OneToMany
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
   public Set<File> files = new HashSet<>();
+
+  public String getStatus() {
+
+    return this.status;
+  }
 
   // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
@@ -144,6 +152,45 @@ public class BannerContest extends PanacheEntityBase implements Serializable {
     } else {
       return update(bannerContest);
     }
+  }
+
+  public static List<BannerContest> findByAssignedTo(Long userId) {
+
+    if (userId == null) {
+      throw new IllegalArgumentException("userId can't be null");
+    }
+    List<BannerContest> entities = BannerContest.<BannerContest> findByAssignedTo(userId);
+
+    return entities;
+  }
+
+  /**
+   * @param userId
+   * @param id2
+   * @return
+   */
+  public static List<BannerContest> findByAssignedToAndContestId(Long userId, Long contestId) {
+
+    Map<String, Object> params = new HashMap<>();
+    params.put("userId", userId);
+    params.put("contestId", contestId);
+
+    return BannerContest.<BannerContest> list("userId = :userId and contestId = :contestId", params);
+  }
+
+  /**
+   * @param contestId
+   * @param bannerApproved
+   * @return
+   */
+  public static BannerContest findByContestIdAndStatus(Long contestId, String bannerApproved) {
+
+    Map<String, Object> params = new HashMap<>();
+    params.put("contestId", contestId);
+    params.put("status", bannerApproved);
+    List<BannerContest> entities = BannerContest.<BannerContest> list("status = :status and contestId = :contestId",
+        params);
+    return entities.size() > 0 ? entities.get(0) : null;
   }
 
 }

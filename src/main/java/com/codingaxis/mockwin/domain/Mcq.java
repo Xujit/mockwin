@@ -2,6 +2,7 @@ package com.codingaxis.mockwin.domain;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.json.bind.annotation.JsonbTransient;
@@ -145,6 +146,20 @@ public class Mcq extends PanacheEntityBase implements Serializable {
     } else {
       return update(mcq);
     }
+  }
+
+  /**
+   * @param userId
+   * @param exam2
+   * @param subject2
+   * @param chapter2
+   * @return
+   */
+  public static List<Mcq> findByCreatedByAndExamAndSubjectAndChapter(Long userId, String exam, String subject,
+      String chapter) {
+
+    // TODO Auto-generated method stub
+    return null;
   }
 
 }

@@ -45,6 +45,19 @@ public class McqResource {
   @ConfigProperty(name = "application.name")
   String applicationName;
 
+  @Path("/user/{userId}/exam/{exam}/subject/{subject}/chapter/{chapter}")
+  public List<Mcq> fetchMCQ(@PathParam("userId") Long userId, //
+      @PathParam("exam") String exam, //
+      @PathParam("subject") String subject, //
+      @PathParam("chapter") String chapter) {
+
+    if (userId != null && exam != null && subject != null && chapter != null) {
+      return Mcq.findByCreatedByAndExamAndSubjectAndChapter(userId, exam, subject, chapter);
+    }
+
+    return null;
+  }
+
   /**
    * {@code POST  /mcqs} : Create a new mcq.
    *
