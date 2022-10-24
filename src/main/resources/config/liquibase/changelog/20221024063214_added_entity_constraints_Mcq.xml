@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity Mcq.
+    -->
+    <changeSet id="20221024063214-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="exam_id"
+                                 baseTableName="mcq"
+                                 constraintName="fk_mcq_exam_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="exam"/>
+
+        <addForeignKeyConstraint baseColumnNames="subject_id"
+                                 baseTableName="mcq"
+                                 constraintName="fk_mcq_subject_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="subject"/>
+
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="mcq"
+                                 constraintName="fk_mcq_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="category"/>
+
+        <addForeignKeyConstraint baseColumnNames="contest_response_id"
+                                 baseTableName="mcq"
+                                 constraintName="fk_mcq_contest_response_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="contest_response"/>
+
+        <addForeignKeyConstraint baseColumnNames="mcqcontest_map_id"
+                                 baseTableName="mcq"
+                                 constraintName="fk_mcq_mcqcontest_map_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="mcq_contest_map"/>
+
+    </changeSet>
+</databaseChangeLog>

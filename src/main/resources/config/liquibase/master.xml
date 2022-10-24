@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql, mariadb"/>
+    <property name="clobType" value="longvarchar" dbms="h2"/>
+    <property name="clobType" value="clob" dbms="mysql, oracle, mssql, mariadb, postgresql"/>
+    <property name="uuidType" value="uuid" dbms="h2, postgresql"/>
+
+    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024061414_added_entity_Assign.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024061514_added_entity_File.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024061614_added_entity_Category.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024061714_added_entity_CompetExam.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024061814_added_entity_Course.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024061914_added_entity_ExamType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024062014_added_entity_CompetExamResponse.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024062114_added_entity_Competition.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024062214_added_entity_Contest.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024062314_added_entity_Curriculum.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024062414_added_entity_SubContest.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024062514_added_entity_Exam.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024062614_added_entity_ContestAssign.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024062714_added_entity_ContestCategory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024062814_added_entity_ContestConquistador.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024062914_added_entity_PrizeWinner.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024063014_added_entity_ContestResponse.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024063114_added_entity_ContestSme.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024063214_added_entity_Mcq.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024063314_added_entity_Subject.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024063414_added_entity_ContestStatusReponse.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024063514_added_entity_Country.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024063614_added_entity_Options.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024063714_added_entity_MCQContest.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024063814_added_entity_MCQContestMap.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024064014_added_entity_UserContest.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024064114_added_entity_UserNotification.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024064214_added_entity_UserPreference.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024064314_added_entity_UserType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024064414_added_entity_AssignMCQ.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024064514_added_entity_BannerContest.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024064614_added_entity_ContestType.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20221024061514_added_entity_constraints_File.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024061814_added_entity_constraints_Course.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024061914_added_entity_constraints_ExamType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024062214_added_entity_constraints_Contest.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024062314_added_entity_constraints_Curriculum.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024062414_added_entity_constraints_SubContest.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024062914_added_entity_constraints_PrizeWinner.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024063014_added_entity_constraints_ContestResponse.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024063114_added_entity_constraints_ContestSme.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024063214_added_entity_constraints_Mcq.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024063514_added_entity_constraints_Country.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024063614_added_entity_constraints_Options.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221024063714_added_entity_constraints_MCQContest.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
+</databaseChangeLog>
