@@ -2,10 +2,8 @@ package com.codingaxis.mockwin.domain;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -13,13 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.runtime.annotations.RegisterForReflection;
@@ -72,9 +66,10 @@ public class BannerContest extends PanacheEntityBase implements Serializable {
   @Column(name = "reason")
   public String reason;
 
-  @OneToMany
-  @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-  public Set<File> files = new HashSet<>();
+  // @JsonIgnore
+  // @OneToMany
+  // @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+  // public Set<File> files = new HashSet<>();
 
   public String getStatus() {
 
@@ -136,7 +131,7 @@ public class BannerContest extends PanacheEntityBase implements Serializable {
       entity.fullname = bannerContest.fullname;
       entity.comments = bannerContest.comments;
       entity.reason = bannerContest.reason;
-      entity.files = bannerContest.files;
+      // entity.files = bannerContest.files;
     }
     return entity;
   }
@@ -159,9 +154,11 @@ public class BannerContest extends PanacheEntityBase implements Serializable {
     if (userId == null) {
       throw new IllegalArgumentException("userId can't be null");
     }
-    List<BannerContest> entities = BannerContest.<BannerContest> findByAssignedTo(userId);
 
-    return entities;
+    Map<String, Object> params = new HashMap<>();
+    params.put("userId", userId);
+
+    return BannerContest.<BannerContest> list("assignedTo = :userId", params);
   }
 
   /**
@@ -175,7 +172,7 @@ public class BannerContest extends PanacheEntityBase implements Serializable {
     params.put("userId", userId);
     params.put("contestId", contestId);
 
-    return BannerContest.<BannerContest> list("userId = :userId and contestId = :contestId", params);
+    return BannerContest.<BannerContest> list("assignedTo = :userId and contestId = :contestId", params);
   }
 
   /**
@@ -188,7 +185,7 @@ public class BannerContest extends PanacheEntityBase implements Serializable {
     Map<String, Object> params = new HashMap<>();
     params.put("contestId", contestId);
     params.put("status", bannerApproved);
-    List<BannerContest> entities = BannerContest.<BannerContest> list("status = :status and contestId = :contestId",
+    List<BannerContest> entities = BannerContest.<BannerContest> list("contestId = :contestId and status = :status",
         params);
     return entities.size() > 0 ? entities.get(0) : null;
   }

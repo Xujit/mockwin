@@ -56,7 +56,8 @@ public class BannerContestResource {
   @ConfigProperty(name = "application.name")
   String applicationName;
 
-  @Path("/user/{userid}")
+  @Path("/user/{userId}")
+  @GET
   public Map<String, List<BannerContest>> getBannersByStatus(@PathParam("userId") Long userId) {
 
     List<BannerContest> bannerContests = BannerContest.findByAssignedTo(userId);
@@ -68,6 +69,7 @@ public class BannerContestResource {
   }
 
   @Path("/approve/user/{userId}/contest/{contestId}/file/{fileName}")
+  @GET
   public String approveBanner(@PathParam("userId") Long userId, //
       @PathParam("contestId") Long contestId, //
       @PathParam("fileName") String fileName) {
@@ -75,17 +77,21 @@ public class BannerContestResource {
     BannerContest approvedbanner = BannerContest.findByContestIdAndStatus(contestId, BANNER_APPROVED);
 
     if (approvedbanner != null) {
-      BannerContest bannerTobeApproved = BannerContest.findByAssignedTo(userId).stream()
-          .filter(b -> b.id.equals(contestId) && b.getStatus().equalsIgnoreCase(SEND_FOR_APPROVAL)).findFirst().get();
-      bannerTobeApproved.approvedFile = fileName;
-      bannerTobeApproved.status = BANNER_APPROVED;
-      BannerContest.persistOrUpdate(bannerTobeApproved);
+      Optional<BannerContest> optionalBannerContest = BannerContest.findByAssignedTo(userId).stream()
+          .filter(b -> b.id.equals(contestId) && b.getStatus().equalsIgnoreCase(SEND_FOR_APPROVAL)).findFirst();
 
-      Contest contestTobeUpdated = Contest.findById(contestId);
-      // contestTobeUpdated.fileName = fileName;
-      contestTobeUpdated.fileId = 0L; // TODO getfile Id and save
-      Contest.persistOrUpdate(contestTobeUpdated);
-      return "success";
+      if (optionalBannerContest.isPresent()) {
+        BannerContest bannerTobeApproved = optionalBannerContest.get();
+        bannerTobeApproved.approvedFile = fileName;
+        bannerTobeApproved.status = BANNER_APPROVED;
+        BannerContest.persistOrUpdate(bannerTobeApproved);
+
+        Contest contestTobeUpdated = Contest.findById(contestId);
+        // contestTobeUpdated.fileName = fileName;
+        contestTobeUpdated.fileId = 0L; // TODO getfile Id and save
+        Contest.persistOrUpdate(contestTobeUpdated);
+        return "success";
+      }
     }
 
     return "failed";
@@ -96,12 +102,16 @@ public class BannerContestResource {
   public BannerContest sendforApproval(@PathParam("userId") Long userId, @RequestBody BannerContest bannerContest) {
 
     List<BannerContest> exisBannerContests = BannerContest.findByAssignedTo(userId);
+
     if (exisBannerContests.size() > 0) {
 
-      BannerContest exisitngBanner = exisBannerContests.stream() //
-          .filter(b -> b.id.equals(bannerContest.id)).findFirst().get();
-      exisitngBanner.status = SEND_FOR_APPROVAL;
-      return BannerContest.persistOrUpdate(exisitngBanner);
+      Optional<BannerContest> optionalBannerContest = exisBannerContests.stream() //
+          .filter(b -> b.id.equals(bannerContest.id)).findFirst();
+      if (optionalBannerContest.isPresent()) {
+        BannerContest exisitngBanner = optionalBannerContest.get();
+        exisitngBanner.status = SEND_FOR_APPROVAL;
+        return BannerContest.persistOrUpdate(exisitngBanner);
+      }
     }
     return null;
   }
@@ -110,13 +120,16 @@ public class BannerContestResource {
   @POST
   public BannerContest declineBanner(@PathParam("userId") Long userId, @RequestBody BannerContest bannerContest) {
 
-    List<BannerContest> bannerContests = BannerContest.findByAssignedToAndContestId(userId, bannerContest.id);
+    List<BannerContest> bannerContests = BannerContest.findByAssignedToAndContestId(userId, bannerContest.contestId);
     if (bannerContests.size() > 0) {
-      BannerContest existingbannerContest = bannerContests.stream()
-          .filter(b -> b.getStatus().equalsIgnoreCase(SEND_FOR_APPROVAL)).findFirst().get();
-      existingbannerContest.status = REJECTED;
-      existingbannerContest.reason = existingbannerContest.reason;
-      return BannerContest.persistOrUpdate(existingbannerContest);
+      Optional<BannerContest> optionalBannerContest = bannerContests.stream()
+          .filter(b -> b.getStatus().equalsIgnoreCase(SEND_FOR_APPROVAL)).findFirst();
+      if (optionalBannerContest.isPresent()) {
+        BannerContest existingbannerContest = optionalBannerContest.get();
+        existingbannerContest.status = REJECTED;
+        existingbannerContest.reason = existingbannerContest.reason;
+        return BannerContest.persistOrUpdate(existingbannerContest);
+      }
     }
     return null;
   }

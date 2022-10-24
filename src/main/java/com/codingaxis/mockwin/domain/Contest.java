@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,15 +53,19 @@ public class Contest extends PanacheEntityBase implements Serializable {
   @Column(name = "type")
   public String type;
 
+  @JsonbDateFormat(value = "yyyy-MM-dd")
   @Column(name = "start_date_time")
   public LocalDate startDateTime;
 
+  @JsonbDateFormat(value = "yyyy-MM-dd")
   @Column(name = "end_date_time")
   public LocalDate endDateTime;
 
+  @JsonbDateFormat(value = "yyyy-MM-dd")
   @Column(name = "commence_time")
   public LocalDate commenceTime;
 
+  @JsonbDateFormat(value = "yyyy-MM-dd")
   @Column(name = "finish_time")
   public LocalDate finishTime;
 
@@ -91,9 +96,11 @@ public class Contest extends PanacheEntityBase implements Serializable {
   @Column(name = "status")
   public String status;
 
+  @JsonbDateFormat(value = "yyyy-MM-dd")
   @Column(name = "created")
   public LocalDate created;
 
+  @JsonbDateFormat(value = "yyyy-MM-dd")
   @Column(name = "last_updated")
   public LocalDate lastUpdated;
 

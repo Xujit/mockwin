@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,9 +55,11 @@ public class CompetExam extends PanacheEntityBase implements Serializable {
   @Column(name = "status")
   public Integer status;
 
+  @JsonbDateFormat(value = "yyyy-MM-dd")
   @Column(name = "created_date")
   public LocalDate createdDate;
 
+  @JsonbDateFormat(value = "yyyy-MM-dd")
   @Column(name = "last_updated")
   public LocalDate lastUpdated;
 

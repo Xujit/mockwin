@@ -3,6 +3,7 @@ package com.codingaxis.mockwin.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,9 +40,11 @@ public class Course extends PanacheEntityBase implements Serializable {
   @Column(name = "name")
   public String name;
 
+  @JsonbDateFormat(value = "yyyy-MM-dd")
   @Column(name = "created")
   public LocalDate created;
 
+  @JsonbDateFormat(value = "yyyy-MM-dd")
   @Column(name = "last_updated")
   public LocalDate lastUpdated;
 
