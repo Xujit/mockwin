@@ -1,0 +1,434 @@
+/** what is the difference cagtegory and contestcategory */
+/* example jdl: https://github.com/jhipster/jdl-samples/blob/9b3fd3c3360f748f893a0c620f3d7c8bf8718fc0/microservice-ecommerce-store.jdl#L76*/
+
+/**
+Admin
+getallusers
+Country - CRUD
+Category - CRUD
+competition  - CRUD
+getExamsByCategoryAndCountry
+
+Banner
+competExam
+contest
+learner
+mcq
+
+SME
+contestByStatus
+
+
+*/
+
+
+application {
+  config {
+    packageName com.codingaxis.mockwin
+    baseName mockwinfinal
+    buildTool maven
+    authenticationType oauth2
+    applicationType microservice
+     databaseType sql
+     devDatabaseType h2Disk
+     prodDatabaseType postgresql
+     jhiPrefix mw
+     skipUserManagement true
+  }
+  entities *
+}
+
+entity Assign{
+	modificationCounter Integer,
+	fullname String required,
+	status String required,
+	userTypeId Integer ,
+	comments String
+}
+
+entity File{
+	modificationCounter Integer,
+	filename String,
+	assignId Long
+}
+
+//unidirectional
+relationship OneToMany {
+ Assign to File
+}
+
+entity Category {
+ modificationCounter Integer,
+ categoryName String required,
+ description String,
+ countryId Long
+}
+
+entity CompetExam{
+	 modificationCounter Integer,
+	 competExamsId Long,
+	 name String required,
+	 description String,
+	 status Integer,
+	 createdDate LocalDate,
+	 lastUpdated LocalDate
+}
+
+
+entity Course {
+	 modificationCounter Integer,
+	 name String,
+	 created LocalDate,
+	 lastUpdated LocalDate,
+	 status String, //ContestStatus.ACTIVE;
+	 competExamId Long, 
+	 curriculum String,
+	 prizeMech String
+}
+
+entity ExamType{
+	examType String
+}
+
+//unidirectional
+relationship OneToOne {
+ Course to ExamType
+}
+
+//unidirectional
+relationship OneToMany {
+ CompetExam to Course
+}
+
+entity CompetExamResponse {
+	modificationCounter Integer,
+	name String required,
+	description String
+}
+
+//unidirectional
+relationship OneToMany {
+ CompetExamResponse to Course
+}
+
+entity Competition {
+	modificationCounter Integer,
+	countryId Long,
+	categoryId Long,
+	 name String required,
+	 description String
+}
+
+
+
+entity Contest {
+	 modificationCounter Integer,
+	 name String,
+	 description String,
+	 type String,
+	 startDateTime LocalDate,
+	 endDateTime LocalDate,
+	 commenceTime LocalDate,
+	 finishTime LocalDate,
+	 duration Long,
+	 prizes String,	 
+	 state String,
+	 region String,
+	 noofmcqs Long,
+	 eligibilityCriteria String,
+	 winnerSelection String,
+	 recurring Boolean,
+	 status String, // ContestStatus.IN_PROGRESS;
+	 created LocalDate,
+	 lastUpdated LocalDate,
+	 completed Boolean,
+	 createdBy Long,
+	 visibility String, // "PUBLIC";
+	 sponsoredBy String,
+	 fileId Long
+}
+
+
+entity Curriculum{
+	description String
+}
+
+entity SubContest{
+	description String
+}
+
+entity Exam{
+ modificationCounter Integer,
+ examName String required,
+ description String
+}
+
+//unidirectional
+relationship OneToOne {
+ Contest to Exam
+ Contest to Country
+}
+//unidirectional
+relationship OneToMany {
+ Contest to Curriculum
+  Contest to SubContest
+}
+
+entity ContestAssign{
+	designerId Long,
+	superSmeId Long,	
+	surveyerId  Long,
+	smeId  Long
+}
+
+
+entity ContestCategory {
+	 modificationCounter Integer,
+	 name String,
+	 participation String,
+	 noOfLevels String,
+	 subContest Boolean,
+	 series Boolean,
+	 desc String,
+	 prizeMechanism String,
+	 countryId Long
+}
+
+
+entity ContestCategory {
+	 modificationCounter Integer,
+	 contestId Long,
+	 status String
+}
+
+
+entity ContestConquistador {
+	contestId Long,
+	status String
+}
+entity PrizeWinner {
+	modificationCounter Integer,
+	name String,
+	prizeName String required,
+	position Long
+}
+
+//unidirectional
+relationship OneToMany {
+ ContestConquistador to PrizeWinner
+}
+
+
+entity ContestResponse{
+  description String
+}
+
+
+relationship OneToMany {
+ ContestResponse to Mcq
+}
+//unidirectional
+relationship OneToOne {
+ ContestResponse to Contest
+}
+
+
+entity ContestSme {
+	 modificationCounter Integer,
+	 contestId Long,
+	 noOfMcqs Long,
+	 assignedTo Long,
+	 status String,
+	 instructions String,
+	 superSMEId Long
+}
+
+//unidirectional
+relationship OneToOne {
+ ContestSme to Exam
+}
+
+
+entity Mcq {
+	modificationCounter Integer,
+	question String,
+	chapter String,
+	deleted Boolean,
+	createdBy Long
+}
+
+//unidirectional
+relationship OneToOne {
+ Mcq to Exam
+}
+
+entity Subject {
+	modificationCounter Integer,
+	subjectName String
+	}
+
+//unidirectional
+relationship OneToOne {
+ ContestSme to Mcq
+}
+
+//unidirectional
+relationship OneToOne {
+ Mcq to Subject
+}
+
+entity ContestStatusReponse {
+	 modificationCounter Integer,
+	 startDate LocalDate,
+	 contestName String,
+	 contestId Long
+	 //List<Assign> designer;
+	 //List<Assign> superSme;
+	 //List<Assign> sme;
+	 //List<Assign> surveyer;
+
+}
+
+entity Country {
+ modificationCounter Integer,
+ countryName String required unique,
+ description String,
+}
+
+entity Options {
+	modificationCounter Integer,
+	answer String required,
+	correct Boolean
+}
+
+//unidirectional
+relationship OneToMany {
+ Mcq to Options
+}
+
+
+entity MCQContest {
+	modificationCounter Integer,
+	contestId Long,
+	noOfMcqs Long,
+	assignedTo Long,
+	userTypeId Long,
+	status String,
+	fullName String,
+	comments String,
+	reason String,
+	superSmeId Long
+}
+
+relationship OneToOne {
+ MCQContest to Exam
+}
+
+
+entity MCQContestMap {
+	modificationCounter Integer,
+	contestId Long,
+	noofmcqs String,
+	subCategory String,
+	assignedTo Long,
+	status String
+}
+
+//unidirectional
+relationship OneToOne {
+ Mcq to Category
+}
+
+//unidirectional
+relationship OneToMany {
+ MCQContestMap to Mcq
+}
+
+entity User {	
+	 userName String,
+	 userTypeId  Integer,
+	 loginTypeId Integer,
+	 fullName String,
+	 status String,
+	 email String pattern(/[a-zA-Z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*/),
+	 phone String,
+	 dob LocalDate,
+	 created LocalDate,
+	 lastUpdated LocalDate,
+	 cityTown String,
+	 state String,
+	 pin String,
+	 country String	 
+}
+
+
+entity UserContest {
+  modificationCounter Integer,
+  userId Long,
+  contestId Long,
+  rank Long,
+  score Long,
+  lastUpdated LocalDate,
+  created LocalDate,
+  completed Boolean,
+  deleted Boolean
+}
+
+entity UserNotification {	
+	 userId Long,
+	 message String,
+	 read Boolean
+}
+
+entity UserPreference{
+	userId Long
+}
+
+//unidirectional
+relationship OneToMany {
+ UserPreference to Country
+  UserPreference to ExamType
+ 
+}
+
+entity UserType{
+	userType String
+}
+
+entity AssignMCQ{
+	modificationCounter Integer,
+	mcqId Integer ,
+	approved Boolean,
+	reason String
+}
+
+entity BannerContest{
+	 modificationCounter Integer,
+	 approvedFile String required,
+	 contestId Long,
+	 assignedTo Long required,
+	 userTypeId Long ,
+	 status String required,
+	 fullname String required,
+	 comments String required,
+	 reason String
+}
+
+//unidirectional
+relationship OneToMany {
+ BannerContest to File
+}
+
+
+entity ContestType{
+ modificationCounter Integer,
+ contestType String required,
+ description String
+}
+
+
+//-------------------
+
+
+
+
