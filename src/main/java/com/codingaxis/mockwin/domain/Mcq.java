@@ -67,6 +67,7 @@ public class Mcq extends PanacheEntityBase implements Serializable {
   @OneToOne
   public Category category;
 
+  @JsonbTransient
   @OneToMany
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
   public Set<Options> options = new HashSet<>();
@@ -157,6 +158,11 @@ public class Mcq extends PanacheEntityBase implements Serializable {
    */
   public static List<Mcq> findByCreatedByAndExamAndSubjectAndChapter(Long userId, String exam, String subject,
       String chapter) {
+
+    if (userId != null && exam != null && subject != null && chapter != null) {
+      // make a service with all fields matching
+      // mcqs = mcqRepository.findByCreatedByAndExamAndSubjectAndChapter(userId,exam,subject,chapter);
+    }
 
     // TODO Auto-generated method stub
     return null;
